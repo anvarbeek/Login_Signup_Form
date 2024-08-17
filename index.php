@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
         if ($email != '' && $tel != '' && $age !='') {
             if ($password != '' && $cpassword != '') {
                 if ($password == $cpassword) {
-                    if ($check != '') {
+                    if ($check != '' ) {
                         $isset = false;
                         foreach ($_SESSION['xotira'] as $xotira) {
                             if ($email == $xotira['email']) {
@@ -32,7 +32,8 @@ if (isset($_POST['submit'])) {
                                 'email' => $email,
                                 'tel' => $tel,
                                 'age' => $age,
-                                'password' => $password
+                                'password' => $password,
+                                'check' => $check
                             ]);
                             header('location:index.php');
                         }
@@ -52,6 +53,7 @@ if (isset($_POST['submit'])) {
         header('location:index.php?error=name');
     }
 }
+
 if (isset($_POST['submit1'])) {
     $email1 = $_POST['email'];
     $password1 = $_POST['password'];
@@ -60,7 +62,21 @@ if (isset($_POST['submit1'])) {
             foreach ($_SESSION['xotira'] as $xotira) {
                 if ($email1 == $xotira['email']) {
                     if ($password1 == $xotira['password']) {
-                        header('location:user/index.php');
+                        if($xotira['check'] == 'admin'){
+                            header('location:user/index.php');
+                        }else{
+
+                            if (empty($_SESSION['users'])) {
+                                $_SESSION['users'] = [];
+                            }
+                            array_push($_SESSION['users'], [
+                                'name_u' => $xotira['name'],
+                                'email_u' => $xotira['email'],
+                                'age_u' => $xotira['age'],
+                                'tel_u' => $xotira['tel']
+                            ]);
+                            header('location:admin/index.php');
+                        }
                     }
                 }
             }
@@ -126,11 +142,10 @@ if (isset($_POST['submit1'])) {
                     <input type="password" name="cpassword" placeholder="password">
                 </div>
                 <div class="policy-text">
-                    <input type="checkbox" id="policy" name="check">
-                    <label for="policy">
-                        I agree the
-                        <a href="#" class="option">Terms & Conditions</a>
-                    </label>
+                    <label for="policy">User</label>
+                    <input type="radio" value="user" name="check">
+                    <label for="policy">Admin</label>
+                    <input type="radio" value="admin" name="check">
                 </div>
                 <button type="submit" name="submit">Sign Up</button>
             </form>

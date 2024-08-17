@@ -1,6 +1,8 @@
+<? session_start(); ?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - www.codingnepalweb.com -->
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +12,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
+
 <body>
     <header>
         <nav class="navbar">
@@ -21,11 +24,12 @@
             <ul class="links">
                 <span class="close-btn material-symbols-rounded">close</span>
                 <li><a href="#">Home</a></li>
-                <li><a href="#">Portfolio</a></li>
+                <li><a href="admin/index.php">Portfolio</a></li>
                 <li><a href="#">Courses</a></li>
                 <li><a href="#">About us</a></li>
                 <li><a href="#">Contact us</a></li>
             </ul>
+            
             <button class="login-btn">LOG IN</button>
         </nav>
     </header>

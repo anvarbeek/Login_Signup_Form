@@ -1,4 +1,11 @@
-<?php session_start(); ?>
+<?php session_start();
+if (isset($_SESSION['xotira'])) {
+    if ($_SESSION['xotira'] === true) {
+        header('location: ../index.php?login=true');
+    }
+}
+
+?>
 
 
 
@@ -61,9 +68,9 @@
             </ul>
 
             <ul class="logout-mode">
-                <li><a href="logout.php">
+                <li><a href="../index.php">
                         <i class="uil uil-signout"></i>
-                        <span class="link-name" >Logout</span>
+                        <span class="link-name">Logout</span>
                     </a></li>
 
                 <li class="mode">
@@ -127,7 +134,7 @@
                 <div class="activity-data">
 
                     <div class="table-container ">
-                        <table style="width: 80%;">
+                        <table style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -135,26 +142,40 @@
                                     <th>Email</th>
                                     <th>Age</th>
                                     <th>Tel</th>
+                                    <th>Password</th>
                                     <th>Admin</th>
+                                    <th>Deletes <a href="logout.php" type="submit" style="text-decoration: none; color:brown; font-size:20px">All <i class='bx bx-trash'></i></a></th>
                                 </tr>
                             </thead><?php $n = 1;
-                                if(isset($_SESSION['xotira']) != []){
-                                    foreach ($_SESSION['xotira'] as $xotira) {
+                                    if (isset($_SESSION['xotira']) != []) {
+                                        foreach ($_SESSION['xotira'] as $xotira) {
                                     ?>
-                                <tbody>
+                                    <tbody>
 
-                                    <tr>
+                                        <tr>
 
-                                        <td><?= $n ?></td>
-                                        <td><?= $xotira['name'] ?></td>
-                                        <td><?= $xotira['email'] ?></td>
-                                        <td><?= $xotira['age'] ?></td>
-                                        <td><?= $xotira['tel'] ?></td>
-                                        <td><?= $xotira['type'] ?></td>
-                                    </tr>
+                                            <td><?= $n ?></td>
+                                            <td><?= $xotira['name'] ?></td>
+                                            <td><?= $xotira['email'] ?></td>
+                                            <td><?= $xotira['age'] ?></td>
+                                            <td><?= $xotira['tel'] ?></td>
+                                            <td><?= $xotira['password'] ?></td>
+                                            <td><?= $xotira['check'] ?></td>
+                                            <td>
+                                                <form action="index.php" method="post">
+                                                    <button name="btn-delete" value="<? echo $n;
+                                                                                        if (isset($_POST['btn-delete'])) {
 
-                                </tbody><?php $n++;
-                                    }} ?>
+                                                                                            unset($xotira[$n]);
+                                                                                        } ?>">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+
+                                    </tbody><?php $n++;
+                                        }
+                                    }
+                                            ?>
                         </table>
                     </div>
 
